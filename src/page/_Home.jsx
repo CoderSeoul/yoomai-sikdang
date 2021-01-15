@@ -1,10 +1,10 @@
 import * as React from 'react';
-import {MainTemplate,Navigation,Footer} from 'components';
-import {HomeContainer} from 'containers';
-        
-const Home = ({history}) =>(
+import { MainTemplate, Navigation } from 'components';
+import { HomeContainer } from 'containers';
+
+const Home = ({ history }) => (
     <MainTemplate header={<Navigation />}>
-        <HomeContainer history={history}/>
+        <HomeContainer history={history} />
     </MainTemplate>
 );
 

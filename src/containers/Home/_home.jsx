@@ -1,7 +1,6 @@
-import React,{useState,useEffect,useRef} from 'react';
-import {useSelector,useDispatch} from 'react-redux';
-import {Home} from 'components';
-import gsap, {TweenMax,TimelineMax, Sine,Power4,Expo,Linear } from 'gsap';
+import React, { useEffect } from 'react';
+import { Home } from 'components';
+import gsap, { TweenMax, TimelineMax, Sine, Power4, Expo, Linear } from 'gsap';
 import * as THREE from 'three';
 import { useMouseWheel } from 'react-use';
 
@@ -31,7 +30,7 @@ let textures = null;
 let mat = null;
 let disp = null;
 
-const HomeContainer = ({history,match}) =>{
+const HomeContainer = ({ history, match }) => {
 
   const vert = `
   varying vec2 vUv;
@@ -88,19 +87,19 @@ const HomeContainer = ({history,match}) =>{
     'https://yumai.s3.ap-northeast-2.amazonaws.com/main/4.jpg',
     'https://yumai.s3.ap-northeast-2.amazonaws.com/main/2.jpg'
   ];
-  
-  const setup =()=> {
+
+  const setup = () => {
     scene = new THREE.Scene()
     clock = new THREE.Clock(true)
-    
+
     renderer = new THREE.WebGLRenderer({ alpha: true })
     renderer.setPixelRatio(window.devicePixelRatio)
     renderer.setSize(el.offsetWidth, el.offsetHeight)
-    
+
     inner.appendChild(renderer.domElement)
   }
 
-  const cameraSetup =()=> {
+  const cameraSetup = () => {
     camera = new THREE.OrthographicCamera(
       el.offsetWidth / -2,
       el.offsetWidth / 2,
@@ -114,21 +113,21 @@ const HomeContainer = ({history,match}) =>{
     camera.position.z = 1
   }
 
-  const render =()=> {
+  const render = () => {
     renderer.render(scene, camera)
   }
 
-  const loadTextures =()=> {
+  const loadTextures = () => {
     const loader = new THREE.TextureLoader()
     loader.crossOrigin = ''
-    
+
     textures = []
     images.forEach((image, index) => {
       const texture = loader.load(image + '?v=' + Date.now(), render())
       console.log(texture);
       texture.minFilter = THREE.LinearFilter
       texture.generateMipmaps = false
-      
+
       if (index === 0 && mat) {
         mat.uniforms.size.value = [
           texture.image.naturalWidth,
@@ -138,15 +137,15 @@ const HomeContainer = ({history,match}) =>{
 
       textures.push(texture)
     })
-    
+
     disp = loader.load('https://s3-us-west-2.amazonaws.com/s.cdpn.io/58281/rock-_disp.png', render())
     disp.magFilter = disp.minFilter = THREE.LinearFilter
     disp.wrapS = disp.wrapT = THREE.RepeatWrapping
   }
 
 
-  const createMesh =()=> {
-    mat = new THREE.ShaderMaterial( {
+  const createMesh = () => {
+    mat = new THREE.ShaderMaterial({
       uniforms: {
         dispPower: { type: 'f', value: 0.0 },
         intensity: { type: 'f', value: 0.5 },
@@ -162,29 +161,29 @@ const HomeContainer = ({history,match}) =>{
     })
 
     const geometry = new THREE.PlaneBufferGeometry(
-      el.offsetWidth, 
-      el.offsetHeight, 
+      el.offsetWidth,
+      el.offsetHeight,
       1
     )
-    
+
     const mesh = new THREE.Mesh(geometry, mat)
 
-    scene.add(mesh)    
+    scene.add(mesh)
   }
 
-  const setStyles =()=> {
+  const setStyles = () => {
     slides.forEach((slide, index) => {
       if (index === 0) return
-      
+
       TweenMax.set(slide, { autoAlpha: 0 })
     })
-    
+
     bullets.forEach((bullet, index) => {
       if (index === 0) return
-      
+
       const txt = bullet.querySelector('.js-slider-bullet__text')
       const line = bullet.querySelector('.js-slider-bullet__line')
-      
+
       TweenMax.set(txt, {
         alpha: 0.25
       })
@@ -194,11 +193,11 @@ const HomeContainer = ({history,match}) =>{
       })
     })
   }
-  const changeTexture=()=> {
+  const changeTexture = () => {
     mat.uniforms.texture1.value = textures[data.current]
     mat.uniforms.texture2.value = textures[data.next]
   }
-  const transitionNext =()=> {
+  const transitionNext = () => {
 
     TweenMax.to(mat.uniforms.dispPower, 2.5, {
       value: 1,
@@ -214,126 +213,126 @@ const HomeContainer = ({history,match}) =>{
 
     const current = slides[data.current]
     const next = slides[data.next]
-    
+
     const currentImages = current.querySelectorAll('.js-slide__img')
     const nextImages = next.querySelectorAll('.js-slide__img')
-    
+
     const currentText = current.querySelectorAll('.js-slider__text-line div')
     const nextText = next.querySelectorAll('.js-slider__text-line div')
-    
+
     const currentBullet = bullets[data.current]
     const nextBullet = bullets[data.next]
-    
+
     const currentBulletTxt = currentBullet.querySelectorAll('.js-slider-bullet__text')
     const nextBulletTxt = nextBullet.querySelectorAll('.js-slider-bullet__text')
-    
+
     const currentBulletLine = currentBullet.querySelectorAll('.js-slider-bullet__line')
     const nextBulletLine = nextBullet.querySelectorAll('.js-slider-bullet__line')
-    
+
     const tl = new TimelineMax({ paused: true })
-    
+
     if (state.initial) {
       TweenMax.to('.js-scroll', 1.5, {
         yPercent: 100,
         alpha: 0,
         ease: Power4.easeInOut
       })
-      
+
       state.initial = false
     }
-    
+
     tl
-    .staggerFromTo(currentImages, 1.5, {
-      yPercent: 0,
-      scale: 1
-    }, {
-      yPercent: -185,
-      scaleY: 1.5,
-      ease: Expo.easeInOut
-    }, 0.075)
-    .to(currentBulletTxt, 1.5, {
-      alpha: 0.25,
-      ease: Linear.easeNone
-    }, 0)
-    .set(currentBulletLine, {
-      transformOrigin: 'right'
-    }, 0)
-    .to(currentBulletLine, 1.5, {
-      scaleX: 0,
-      ease: Expo.easeInOut
-    }, 0)
-    
+      .staggerFromTo(currentImages, 1.5, {
+        yPercent: 0,
+        scale: 1
+      }, {
+        yPercent: -185,
+        scaleY: 1.5,
+        ease: Expo.easeInOut
+      }, 0.075)
+      .to(currentBulletTxt, 1.5, {
+        alpha: 0.25,
+        ease: Linear.easeNone
+      }, 0)
+      .set(currentBulletLine, {
+        transformOrigin: 'right'
+      }, 0)
+      .to(currentBulletLine, 1.5, {
+        scaleX: 0,
+        ease: Expo.easeInOut
+      }, 0)
+
     if (currentText) {
       tl
-      .fromTo(currentText, 2, {
-        yPercent: 0
-      }, {
-        yPercent: -100,
-        ease: Power4.easeInOut
-      }, 0)  
+        .fromTo(currentText, 2, {
+          yPercent: 0
+        }, {
+          yPercent: -100,
+          ease: Power4.easeInOut
+        }, 0)
     }
-    
+
     tl
-    .set(current, {
-      autoAlpha: 0
-    })
-    .set(next, {
-      autoAlpha: 1
-    }, 1)
-    
+      .set(current, {
+        autoAlpha: 0
+      })
+      .set(next, {
+        autoAlpha: 1
+      }, 1)
+
     if (nextText) {
       tl
-      .fromTo(nextText, 2, {
-        yPercent: 100
+        .fromTo(nextText, 2, {
+          yPercent: 100
+        }, {
+          yPercent: 0,
+          ease: Power4.easeOut
+        }, 1.5)
+    }
+
+    tl
+      .staggerFromTo(nextImages, 1.5, {
+        yPercent: 150,
+        scaleY: 1.5
       }, {
         yPercent: 0,
-        ease: Power4.easeOut
-      }, 1.5)  
-    }
-    
-    tl
-    .staggerFromTo(nextImages, 1.5, {
-      yPercent: 150,
-      scaleY: 1.5
-    }, {
-      yPercent: 0,
-      scaleY: 1,
-      ease: Expo.easeInOut
-    }, 0.075, 1)
-    .to(nextBulletTxt, 1.5, {
-      alpha: 1,
-      ease: Linear.easeNone
-    }, 1)
-    .set(nextBulletLine, {
-      transformOrigin: 'left'
-    }, 1)
-    .to(nextBulletLine, 1.5, {
-      scaleX: 1,
-      ease: Expo.easeInOut
-    }, 1)
-    
+        scaleY: 1,
+        ease: Expo.easeInOut
+      }, 0.075, 1)
+      .to(nextBulletTxt, 1.5, {
+        alpha: 1,
+        ease: Linear.easeNone
+      }, 1)
+      .set(nextBulletLine, {
+        transformOrigin: 'left'
+      }, 1)
+      .to(nextBulletLine, 1.5, {
+        scaleX: 1,
+        ease: Expo.easeInOut
+      }, 1)
+
     tl.play()
   }
 
-  const nextSlide =()=> {
+  const nextSlide = () => {
     if (state.animating) return
-    
+
     state.animating = true
-    
+
     transitionNext()
-    
+
     data.current = data.current === data.total ? 0 : data.current + 1
     data.next = data.current === data.total ? 0 : data.current + 1
   }
 
 
   useEffect(
-		() => { 
+    () => {
       el = document.querySelector('.js-slider');
       inner = el.querySelector('.js-slider__inner');
       slides = [...el.querySelectorAll('.js-slide')];
       bullets = [...el.querySelectorAll('.js-slider-bullet')];
-      
+
       setup();
       cameraSetup();
       loadTextures();
@@ -342,30 +341,27 @@ const HomeContainer = ({history,match}) =>{
       render();
       nextSlide();
     },
-		[],
-    );
+    [],
+  );
 
-    
-    useEffect(
-		() => { 
-      if(mouseWheel!==0 && mouseWheel%100===0){
+
+  useEffect(
+    () => {
+      if (mouseWheel !== 0 && mouseWheel % 100 === 0) {
         nextSlide();
       }
     },
-		[mouseWheel],
-    );
-    return(
-        <>
-            <Home 
-                history={history}
+    [mouseWheel],
+  );
+  return (
+    <>
+      <Home
+        history={history}
 
-            />
-        </>
-    );
-  }
+      />
+    </>
+  );
+}
 
-const mapStateToProps = (rootReducer)=>({//reducers => case
-    
-});
 
 export default HomeContainer;

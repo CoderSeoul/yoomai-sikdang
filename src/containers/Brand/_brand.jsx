@@ -1,31 +1,17 @@
-import React,{useState,useEffect,useRef} from 'react';
-import {useSelector,useDispatch} from 'react-redux';
-import {Brand} from 'components';
-import gsap, {TweenMax,TimelineMax, Sine,Power4,Expo,Linear } from 'gsap';
+import React, { useEffect } from 'react';
+import { Brand } from 'components';
 
 
-const BrandContainer = ({history,match}) =>{
+const BrandContainer = ({ history, match }) => {
 
+  return (
+    <>
+      <Brand
+        history={history}
 
-    
-    useEffect(
-		() => { 
-
-    },
-		[],
-    );
-    return(
-        <>
-            <Brand 
-                history={history}
-
-            />
-        </>
-    );
-  }
-
-const mapStateToProps = (rootReducer)=>({//reducers => case
-    
-});
+      />
+    </>
+  );
+}
 
 export default BrandContainer;
