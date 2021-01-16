@@ -5,14 +5,16 @@ export const StyledNavigation = styled.nav`
         display:flex;
         justify-content: space-between;
         width: 100%; 
-        height:50px;
+        height:80px;
+        padding-left:10px;
+        background-color:rgba(0,0,0,0);
         z-index:10001;
-        background:rgba(0,0,0,0);
+
         margin-top:30px;
         .logo{
             width:100px;
             height:auto;
-            }
+        }
 
         ul{
             display:flex;
@@ -23,6 +25,7 @@ export const StyledNavigation = styled.nav`
                 text-decoration: none;
                 margin-left:10px;
                 margin-right:10px;
+                font-family: 'GmarketSansBold';
             }
             .sns{
                 img{

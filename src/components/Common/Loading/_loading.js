@@ -9,7 +9,7 @@ const Loading = ({
   useEffect(
     () => {
       const tl = gsap.timeline();
-      tl.to([LoadingRef.current.children], 4,
+      tl.to([LoadingRef.current.children], 2.5,
         {
           autoAlpha: 1,
           repeat: -1,

@@ -2,7 +2,14 @@ import React, { useEffect } from 'react';
 import { Home } from 'components';
 import gsap, { TweenMax, TimelineMax, Sine, Power4, Expo, Linear } from 'gsap';
 import * as THREE from 'three';
+import {
+  BrowserView,
+  MobileView,
+  isBrowser,
+  isMobile
+} from "react-device-detect";
 import { useMouseWheel } from 'react-use';
+import { useWindowSize } from 'lib/hoc'
 
 let el = undefined;
 let inner = undefined;
@@ -27,11 +34,12 @@ let scene = null;
 let clock = null;
 let camera = null;
 let textures = null;
+let texture = null;
 let mat = null;
 let disp = null;
 
 const HomeContainer = ({ history, match }) => {
-
+  let size = useWindowSize()
   const vert = `
   varying vec2 vUv;
   void main() {
@@ -123,15 +131,14 @@ const HomeContainer = ({ history, match }) => {
 
     textures = []
     images.forEach((image, index) => {
-      const texture = loader.load(image + '?v=' + Date.now(), render())
-      console.log(texture);
+      texture = loader.load(image + '?v=' + Date.now(), render())
       texture.minFilter = THREE.LinearFilter
       texture.generateMipmaps = false
 
       if (index === 0 && mat) {
         mat.uniforms.size.value = [
-          texture.image.naturalWidth,
-          texture.image.naturalHeight
+          size.innerWidth,
+          size.innerHeight
         ]
       }
 
@@ -353,6 +360,8 @@ const HomeContainer = ({ history, match }) => {
     },
     [mouseWheel],
   );
+
+
   return (
     <>
       <Home

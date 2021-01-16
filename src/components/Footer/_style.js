@@ -2,14 +2,17 @@ import styled from 'styled-components';
 
 
 export const StyledFooter = styled.footer`
-
+  position:fixed;
+  bottom:0;
+  z-index:1000;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  height: 241px;
-  background-color: white;
+  width:100vw;
+  height:70px;
+  background-color: rgba(0,0,0,0.9);
   justify-content: space-between;
-  margin-top:100vh;
+
   .section {
     margin-top: 52px;
     flex: 22%;

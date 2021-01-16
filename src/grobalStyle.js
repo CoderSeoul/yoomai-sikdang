@@ -27,6 +27,7 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0;
   }
 
+
   p{
     font-family: 'GmarketSansLight';
     color:#fff;

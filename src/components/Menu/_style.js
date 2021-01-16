@@ -1,8 +1,7 @@
-import styled,{keyframes} from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
-export const StyledMenu =styled.div`
+export const StyledMenu = styled.div`
 
-   
 .inner{
     width:100%;
     height:100%;
@@ -35,9 +34,10 @@ export const StyledMenu =styled.div`
     top: 0; 
     left: 0; 
     width: 100%; 
-    height: 100%; 
+    height: 100vh; 
     overflow: hidden; 
     z-index: -1; 
+    background:#ddd;
     img{
         display: block; 
         width: 100%; 
@@ -46,7 +46,7 @@ export const StyledMenu =styled.div`
 }
 
 .fullsize-video-bg { 
-    height: 100%; 
+    height: 100vh; 
     overflow: hidden; 
 }
 .fullsize-video-bg:before { 

@@ -8,7 +8,6 @@ const source = {
   menu: [
     { name: 'Home', link: '/' },
     { name: 'Brand', link: '/brand' },
-    { name: 'Branch', link: '/branch' },
     { name: 'Menu', link: '/menu' },
   ],
   phone: '031-384-8340',
@@ -46,7 +45,7 @@ const Navigation = () => {
             })
           }
         </ul>
-        <ul>
+        {/* <ul>
           <li>
             <p><b>{source.phone}</b></p>
           </li>
@@ -59,7 +58,7 @@ const Navigation = () => {
               )
             })
           }
-        </ul>
+        </ul> */}
       </StyledNavigation>
     </>
   );

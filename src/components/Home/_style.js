@@ -2,7 +2,9 @@ import styled from 'styled-components';
 
 
 export const StyledHome = styled.div`
-
+position:fixed;
+    width:100vw;
+    height: 100vh; 
     display: flex;
     align-items: center;
     justify-content: center;
@@ -198,9 +200,8 @@ export const StyledHome = styled.div`
       justify-content: center;
       position: absolute;
       left: 0;
-      top: 0;
+      top: 10vh;
       right: 0;
-      bottom: 0;
     }
     
     &__img{

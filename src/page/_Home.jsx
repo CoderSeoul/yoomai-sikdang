@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { MainTemplate, Navigation } from 'components';
+import { Footer, MainTemplate, Navigation } from 'components';
 import { HomeContainer } from 'containers';
 
 const Home = ({ history }) => (
-    <MainTemplate header={<Navigation />}>
+    <MainTemplate header={<Navigation />} footer={<Footer />}>
         <HomeContainer history={history} />
     </MainTemplate>
 );

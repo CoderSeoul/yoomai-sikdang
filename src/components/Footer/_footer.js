@@ -1,11 +1,11 @@
 import * as React from "react";
-import {Link} from 'react-router-dom';
-import {StyledFooter} from './_style';
+import { Link } from 'react-router-dom';
+import { StyledFooter } from './_style';
 
 const Footer = () => (
 
-    <StyledFooter>
-      <div className="section">
+  <StyledFooter>
+    {/* <div className="section">
         <p className="title">QUESTIONS</p>
         <ul className="list">
           <li>
@@ -55,8 +55,8 @@ const Footer = () => (
       </div>
       <div className="section">
         <p>2019 shopmate Ltd</p>
-      </div>
-    </StyledFooter>
+      </div> */}
+  </StyledFooter>
 
 );
 
